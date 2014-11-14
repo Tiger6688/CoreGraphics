@@ -7,16 +7,46 @@
 //
 
 #import "AppDelegate.h"
+#import "BaseViewController.h"
+#include <sys/sysctl.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
+    BaseViewController *baseViewController = [[BaseViewController alloc]init];
+    self.window.rootViewController = baseViewController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    NSLog(@"name : %@ model :%@ localizedModel:%@",     [[UIDevice currentDevice] name], [[UIDevice currentDevice] model], [[UIDevice currentDevice] localizedModel]);
+    NSLog(@"hostName:%@ \n operatingSystem:%d\noperatingSystemName:%@\noperatingSystemVersionString:%@\nprocessorCount:%d", [NSProcessInfo processInfo].hostName, [NSProcessInfo processInfo].operatingSystem,[NSProcessInfo processInfo].operatingSystemName,[NSProcessInfo processInfo].operatingSystemVersionString,[NSProcessInfo processInfo].activeProcessorCount);
+    for (NSInteger i = 0; i < 1; i++) {
+        NSTimeInterval time = [NSProcessInfo processInfo].systemUptime;
+        NSLog(@"开机运行时间:%f", time);
+    }
+
+    
+    char *s1="acc";
+    char *s2="abc";
+    int r=memcmp(s1,s2,3);
+    NSLog(@"r=%d",r);
+    
+    NSString *str1 = @"acc";
+    NSString *str2 = @"axc";
+    int r1=memcmp([str1 UTF8String],[str2 UTF8String],3);
+    NSLog(@"r1=%d",r1);
+    
+    char dest[] = "67890";
+    char src[] = "12345";
+    memcpy(src, dest, strlen(dest));
+    NSLog(@"%s",src);
+    
+    
+    
     return YES;
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
